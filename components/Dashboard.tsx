@@ -29,7 +29,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     const open = data?.today.undone ?? 0;
-    document.title = open > 0 ? `(${open}) Day Log` : "Day Log";
+    document.title = open > 0 ? `(${open}) Daily Log` : "Daily Log";
   }, [data]);
 
   useEffect(() => {
@@ -69,7 +69,7 @@ export default function Dashboard() {
           <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-pine font-mono text-sm text-surface">
             ✓
           </span>
-          Day Log
+            Daily Log
         </div>
         <div className="flex items-center gap-2">
           <button
@@ -93,7 +93,7 @@ export default function Dashboard() {
                   className="absolute right-0 top-10 z-30 flex w-56 flex-col gap-2 rounded-xl border border-line bg-surface p-3 shadow-lg"
                 >
                   <label className="font-mono text-[10px] uppercase tracking-wider text-faint" htmlFor="new-day-date">
-                    Day log for
+                      Daily log for
                   </label>
                   <input
                     id="new-day-date"
@@ -106,7 +106,7 @@ export default function Dashboard() {
                     type="submit"
                     className="rounded-lg bg-pine px-3 py-1.5 text-sm font-medium text-surface hover:bg-pine-deep"
                   >
-                    Open day log
+                    Open daily log
                   </button>
                 </form>
               </>

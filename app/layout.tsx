@@ -9,7 +9,7 @@ const body = Instrument_Sans({ subsets: ["latin"], variable: "--font-body" });
 const mono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
-  title: "Day Log",
+  title: "Daily Log",
   description: "Fast daily task log — capture during meetings, carry over what's left.",
 };
 

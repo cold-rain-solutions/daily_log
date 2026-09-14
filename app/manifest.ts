@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Day Log",
-    short_name: "Day Log",
+    name: "Daily Log",
+    short_name: "Daily Log",
     description: "Fast daily task log — capture during meetings, carry over what's left.",
     start_url: "/",
     display: "standalone",

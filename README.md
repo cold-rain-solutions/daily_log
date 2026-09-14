@@ -1,4 +1,4 @@
-# Day Log
+# Daily Log
 
 A fast, local, keyboard-first daily task app. Built for capturing tasks during meetings: open the app, type, press Enter, keep typing.
 
@@ -51,7 +51,7 @@ The app ships a web manifest (`app/manifest.ts`), so Chrome can install it as a 
 **Option A — Install via Chrome's menu**
 
 1. Start the server (`npm run start`) and open `http://localhost:3001` in Chrome.
-2. Click the install icon at the right of the address bar (or Chrome menu → **Cast, save and share** → **Install Day Log…**).
+2. Click the install icon at the right of the address bar (or Chrome menu → **Cast, save and share** → **Install Daily Log…**).
 3. Chrome creates an app shortcut in Launchpad / Applications that opens in its own window.
 
 **Option B — Manual app-mode shortcut**
@@ -135,4 +135,4 @@ To have the server running automatically whenever you log in (so the app is just
    launchctl list | grep daylog                                        # check it's running
    ```
 
-Combine this with the Chrome app-mode shortcut above (Option B, in your Login Items, or just pinned to the Dock) and Day Log behaves like a native app that's always running in the background.
+Combine this with the Chrome app-mode shortcut above (Option B, in your Login Items, or just pinned to the Dock) and Daily Log behaves like a native app that's always running in the background.
