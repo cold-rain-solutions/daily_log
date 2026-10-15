@@ -5,6 +5,7 @@ import { DndContext, PointerSensor, closestCenter, useSensor, useSensors } from 
 import type { DragEndEvent } from "@dnd-kit/core";
 import { SortableContext, arrayMove, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { ChevronRight } from "lucide-react";
+import ConfirmDialog from "./ConfirmDialog";
 import TaskRow from "./TaskRow";
 import { api, containerTitle, toast } from "@/lib/client";
 import type { Container, Task } from "@/lib/types";
@@ -39,6 +40,30 @@ export default function TaskList({ containerId, tasks, setTasks, containers, onM
     const done = task.done ? 0 : 1;
     setTasks((ts) => ts.map((t) => (t.id === task.id ? { ...t, done: done as 0 | 1 } : t)));
     void api(`/api/tasks/${task.id}`, { method: "PATCH", json: { done: !task.done } }).then(() => onMutated?.());
+  }
+
+  // Delete asks for confirmation first; focus returns to the row (or its
+  // neighbour once the row is gone) so keyboard flow isn't interrupted.
+  const [pendingDelete, setPendingDelete] = useState<Task | null>(null);
+  const returnFocus = useRef<HTMLElement | null>(null);
+
+  function requestDelete(task: Task) {
+    returnFocus.current = (document.activeElement as HTMLElement | null)?.closest<HTMLElement>("[data-taskrow]") ?? null;
+    setPendingDelete(task);
+  }
+
+  function cancelDelete() {
+    setPendingDelete(null);
+    returnFocus.current?.focus();
+  }
+
+  function confirmDelete() {
+    if (!pendingDelete) return;
+    const row = returnFocus.current;
+    const neighbour = (row?.nextElementSibling ?? row?.previousElementSibling) as HTMLElement | null;
+    del(pendingDelete);
+    setPendingDelete(null);
+    requestAnimationFrame(() => neighbour?.focus());
   }
 
   function del(task: Task) {
@@ -107,7 +132,7 @@ export default function TaskList({ containerId, tasks, setTasks, containers, onM
                 task={task}
                 moveTargets={moveTargets}
                 onToggle={toggle}
-                onDelete={del}
+                onDelete={requestDelete}
                 onMove={move}
                 onSave={save}
                 onKeyReorder={keyReorder}
@@ -129,6 +154,17 @@ export default function TaskList({ containerId, tasks, setTasks, containers, onM
 
   return (
     <div className="space-y-3">
+      <ConfirmDialog
+        open={pendingDelete !== null}
+        title="Delete task?"
+        message={
+          <>
+            <span className="font-medium text-ink">{pendingDelete?.subject}</span> will be permanently deleted.
+          </>
+        }
+        onConfirm={confirmDelete}
+        onCancel={cancelDelete}
+      />
       {openTasks.length > 0 ? (
         list(openTasks, false)
       ) : (
