@@ -47,3 +47,5 @@ next-env.d.ts
 /data/tasks.db
 /data/tasks.db-shm
 /data/tasks.db-wal
+
+scripts
